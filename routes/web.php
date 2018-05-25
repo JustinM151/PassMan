@@ -15,6 +15,12 @@ Auth::routes();
 
 /////////// DASHBOARD ///////////
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', function() {
+    if(\Illuminate\Support\Facades\Auth::check()) {
+        return redirect('/home');
+    }
+    return redirect('/login');
+});
 
 /////////// PORTALS ///////////
 Route::get('/portals', 'PortalController@index')->name('portals');
@@ -34,7 +40,7 @@ Route::get('/passwords/search', 'PasswordController@search')->name('passwords.se
 Route::get('/passwords/{pass}', 'PasswordController@show')->name('passwords.show');
 
 /////////// TWO FACTOR AUTH ///////////
-Route::post('authenticate','Auth\TwoFactorPinController@auth')->name('2FA.authenticate');
+Route::post('authenticate','Auth\TwoFactorPinController@authenticate')->name('2FA.authenticate');
 Route::get('authenticate','Auth\TwoFactorPinController@require')->name('2FA.require');
 Route::get('authenticate/resend','Auth\TwoFactorPinController@resend')->name('2FA.resend');
 

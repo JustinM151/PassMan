@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\TwoFactorPin;
 use App\User;
 use Closure;
 use Illuminate\Support\Facades\Auth;
@@ -9,9 +10,9 @@ use Illuminate\Support\Facades\Auth;
 class EnforceTwoFactorAuthentication
 {
     protected $except_urls = [
-        'home',
         'setup',
         'login',
+        'logout',
         'register',
         'authenticate'
     ];
@@ -25,15 +26,17 @@ class EnforceTwoFactorAuthentication
      */
     public function handle($request, Closure $next)
     {
-        $regex = '#' . implode('|', $this->except_urls) . '#';
+        if(Auth::check()) {
+            $regex = '#' . implode('|', $this->except_urls) . '#';
 
-        if(!preg_match($regex, $request->path())) {
-            /** @var User $user */
-            $user = Auth::user();
-            $pin = empty($user->lastPin()->pin) ? '99999999':$user->lastPin()->pin;
-            if ($user->enforce_2fa && session('2fa_pin') != 'true') {
-                //stop them in their tracks
-                return redirect('/authenticate');
+            if(!preg_match($regex, $request->path())) {
+                /** @var User $user */
+                $user = Auth::user();
+
+                if ($user->enforce_2fa && $request->session()->get('2fa_pin','false') != 'true') {
+                    //stop them in their tracks
+                    return redirect('/authenticate');
+                }
             }
         }
         return $next($request);

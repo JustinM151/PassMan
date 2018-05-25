@@ -52,4 +52,14 @@ class User extends Authenticatable
     {
         return $this->pins()->orderBy('created_at','desc')->first();
     }
+
+    public function sms_number()
+    {
+        return $this->country_code.$this->sms_number;
+    }
+
+    public function routeNotificationForNexmo($notification)
+    {
+        return $this->sms_number();
+    }
 }

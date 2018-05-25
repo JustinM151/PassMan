@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Messages\NexmoMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -11,14 +12,15 @@ class TwoFactorPin extends Notification
 {
     use Queueable;
 
+    private $pin;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($pin)
     {
-        //
+        $this->pin = $pin;
     }
 
     /**
@@ -29,7 +31,7 @@ class TwoFactorPin extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['nexmo'];
     }
 
     /**
@@ -44,6 +46,12 @@ class TwoFactorPin extends Notification
                     ->line('The introduction to the notification.')
                     ->action('Notification Action', url('/'))
                     ->line('Thank you for using our application!');
+    }
+
+    public function toNexmo($notifiable)
+    {
+        return (new NexmoMessage)
+            ->content('Your Two Factor PIN is: '.$this->pin);
     }
 
     /**
