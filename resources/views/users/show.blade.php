@@ -47,7 +47,8 @@
 
                 <div class="card-body">
                     <form action="{{route('users.update2FA', $user)}}" method="post">
-                        {{csrf_field()}}
+                        @csrf
+                        @method('patch')
                         <div class="form-group">
                             <label>Enable 2FA:</label>
                             <select id="enforce_2fa" name="enforce_2fa" class="form-control">

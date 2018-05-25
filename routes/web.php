@@ -14,7 +14,7 @@
 Auth::routes();
 
 /////////// DASHBOARD ///////////
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
 
 /////////// PORTALS ///////////
 Route::get('/portals', 'PortalController@index')->name('portals');

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class EnforceTwoFactorAuthentication
 {
     protected $except_urls = [
-        '/',
+        'home',
         'setup',
         'login',
         'register',
@@ -26,7 +26,7 @@ class EnforceTwoFactorAuthentication
     public function handle($request, Closure $next)
     {
         $regex = '#' . implode('|', $this->except_urls) . '#';
-        //dd(preg_match($regex, $request->path()));
+
         if(!preg_match($regex, $request->path())) {
             /** @var User $user */
             $user = Auth::user();

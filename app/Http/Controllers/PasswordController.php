@@ -12,7 +12,18 @@ use phpseclib\Crypt\Hash;
 
 class PasswordController extends Controller
 {
+    /**
+     * PasswordController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
+    /**
+     * @param StorePasswordRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(StorePasswordRequest $request)
     {
         $password = new Password($request->input());
@@ -23,6 +34,10 @@ class PasswordController extends Controller
         return redirect()->back()->with('status', 'Password Successfully saved');
     }
 
+    /**
+     * @param Password $pass
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function show(Password $pass)
     {
         $portal = $pass->portal();
@@ -30,6 +45,10 @@ class PasswordController extends Controller
         return view('passwords.show')->with('password',$pass)->with('portal',$portal);
     }
 
+    /**
+     * @param StoreRandomPasswordRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function storeRandom(StoreRandomPasswordRequest $request)
     {
 
