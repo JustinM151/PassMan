@@ -42,4 +42,14 @@ class User extends Authenticatable
     {
         return $this->passwords()->where('name', 'like','%'.$name.'%')->get();
     }
+
+    public function pins()
+    {
+        return $this->hasMany(TwoFactorPin::class);
+    }
+
+    public function lastPin()
+    {
+        return $this->pins()->orderBy('created_at','desc')->first();
+    }
 }

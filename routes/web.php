@@ -33,6 +33,10 @@ Route::post('/passwords', 'PasswordController@store')->name('passwords.store');
 Route::get('/passwords/search', 'PasswordController@search')->name('passwords.search');
 Route::get('/passwords/{pass}', 'PasswordController@show')->name('passwords.show');
 
+/////////// TWO FACTOR AUTH ///////////
+Route::POST('authenticate','Auth\TwoFactorPinController@auth')->name('2FA.authenticate');
+Route::get('authenticate','Auth\TwoFactorPinController@require')->name('2FA.require');
+Route::get('authenticate/resend','Auth\TwoFactorPinController@resend')->name('2FA.resend');
 
 /////////// SETUP ///////////
 Route::get('/setup', 'SetupController@setup');
