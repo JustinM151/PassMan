@@ -13,7 +13,7 @@
 
                             <div class="form-group row">
                                 <div class="col-md-6 offset-md-3 text-center">
-                                    <input id="pin" type="text" class="text-center form-control{{ $errors->has('pin') ? ' is-invalid' : '' }}" name="pin" value="{{ old('pin') }}" required autofocus placeholder="ABC123">
+                                    <input id="pin" type="text" name="pin" class="text-center form-control{{ $errors->has('pin') ? ' is-invalid' : '' }}" value="{{ old('pin') }}" required autofocus placeholder="ABC123">
 
                                     @if ($errors->has('pin'))
                                         <span class="invalid-feedback">

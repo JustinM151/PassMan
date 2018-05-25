@@ -13,4 +13,16 @@ class TwoFactorPin extends Model
     {
         return $this->active && empty($this->consumed_at) && $this->created_at>Carbon::now()->subMinutes(15);
     }
+
+    public function consume()
+    {
+        if(!$this->isValid()) {
+            return false;
+        }
+
+        $this->consumed_at = Carbon::now();
+        $this->active = false;
+        $this->save();
+        return true;
+    }
 }

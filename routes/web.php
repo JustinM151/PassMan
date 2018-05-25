@@ -34,9 +34,16 @@ Route::get('/passwords/search', 'PasswordController@search')->name('passwords.se
 Route::get('/passwords/{pass}', 'PasswordController@show')->name('passwords.show');
 
 /////////// TWO FACTOR AUTH ///////////
-Route::POST('authenticate','Auth\TwoFactorPinController@auth')->name('2FA.authenticate');
+Route::post('authenticate','Auth\TwoFactorPinController@auth')->name('2FA.authenticate');
 Route::get('authenticate','Auth\TwoFactorPinController@require')->name('2FA.require');
 Route::get('authenticate/resend','Auth\TwoFactorPinController@resend')->name('2FA.resend');
+
+/////////// USERS ///////////
+Route::get('/users/{user}', 'UserController@show')->name('users.show');
+Route::patch('/users/{user}', 'UserController@update')->name('users.update');
+Route::patch('/users/{user}/password', 'UserController@updatePassword')->name('users.updatePassword');
+Route::patch('/users/{user}/2fa', 'UserController@update2FA')->name('users.update2FA');
+
 
 /////////// SETUP ///////////
 Route::get('/setup', 'SetupController@setup');

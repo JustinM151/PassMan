@@ -17,6 +17,8 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('email')->unique();
+            $table->integer('country_code')->nullable();
+            $table->integer('sms_number')->nullable();
             $table->string('password');
             $table->boolean('is_admin')->default(false);
             $table->boolean('enforce_2fa')->default(false);

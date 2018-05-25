@@ -55,6 +55,10 @@
                                 </a>
 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('users.show', Auth::user()) }}">
+                                        Account Settings
+                                    </a>
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -110,6 +114,10 @@
                     $(this).text("HIDE PASSWORD");
                 }
             })
+        });
+
+        new InputMask({
+            masked: ".phnum"
         });
     </script>
 </body>

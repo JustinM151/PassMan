@@ -31,7 +31,7 @@ class EnforceTwoFactorAuthentication
             /** @var User $user */
             $user = Auth::user();
             $pin = empty($user->lastPin()->pin) ? '99999999':$user->lastPin()->pin;
-            if ($user->enforce_2fa && session('2fa_pin') != $pin) {
+            if ($user->enforce_2fa && session('2fa_pin') != 'true') {
                 //stop them in their tracks
                 return redirect('/authenticate');
             }
